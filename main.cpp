@@ -108,7 +108,7 @@ static void StartUseFlow(HWND hwnd) {
         gPerceptron = nullptr;
     }
     gKeywords = buildKeywordList();
-    gPerceptron = new Perceptron((int)gKeywords.size(), 0.1);
+    gPerceptron = new Perceptron((int)gKeywords.size(), 0.001);
 
     AppendLog(L"Load existing model? (y/n): ", hwnd);
     gUseStep = 0; // expecting y/n
@@ -210,7 +210,7 @@ static void StartTrainFlow(HWND hwnd) {
         gPerceptron = nullptr;
     }
     gKeywords = buildKeywordList();
-    gPerceptron = new Perceptron((int)gKeywords.size(), 0.1);
+    gPerceptron = new Perceptron((int)gKeywords.size(), 0.001);
 
     AppendLog(L"Load existing model before training? (y/n): ", hwnd);
     gTrainStep = 0; // expecting y/n
@@ -365,22 +365,30 @@ static void HandleTrainInput(HWND hwnd) {
                 ss << L"  Input: ";
                 for (auto v : gX[i]) ss << v << L" ";
 
-                double beforeScore = gPerceptron->score(gX[i]);
-                int pred = gPerceptron->predict(gX[i]);
+                // before update
+                double yhat_before = gPerceptron->score(gX[i]);   // this is "score"
+                int    pred_before = gPerceptron->predict(gX[i]);
+                int    y = gY[i];
 
-                ss << L"\n  Score(before): " << beforeScore
-                    << L" Predicted: " << pred
-                    << L" Expected: " << gY[i]
-                    << L" Error: " << (gY[i] - pred);
+                // gradient wrt yhat for squared loss 0.5 * (yhat - y)^2
+                double grad = (yhat_before - y);
+                double loss = 0.5 * grad * grad;
+
+                ss << L"\n  Score(before): " << yhat_before
+                    << L" Predicted: " << pred_before
+                    << L" Expected: " << y
+                    << L" Error(0/1): " << (y - pred_before)
+                    << L"  Grad(yhat-y): " << grad
+                    << L"  Loss: " << loss;
                 AppendLog(ss.str(), hwnd);
 
-                // train step
+                // train step (this uses grad internally)
                 gPerceptron->train(gX[i], gY[i]);
 
                 // after
-                double afterScore = gPerceptron->score(gX[i]);
+                double yhat_after = gPerceptron->score(gX[i]);
                 std::wstringstream ss2;
-                ss2 << L"  Score(after): " << afterScore << L"\n";
+                ss2 << L"  Score(after): " << yhat_after << L"\n";
                 ss2 << L"  Weights: ";
                 const auto& W = gPerceptron->getWeights();
                 for (auto w : W) ss2 << w << L" ";
@@ -388,6 +396,7 @@ static void HandleTrainInput(HWND hwnd) {
                 AppendLog(ss2.str(), hwnd);
             }
         }
+
 
         // final prints (exact)
         {
@@ -401,14 +410,20 @@ static void HandleTrainInput(HWND hwnd) {
 
         AppendLog(L"\nTraining set predictions:", hwnd);
         for (size_t i = 0; i < gX.size(); ++i) {
-            int pred = gPerceptron->predict(gX[i]);
+            double yhat = gPerceptron->score(gX[i]);
+            int    pred = gPerceptron->predict(gX[i]);
+            int    y = gY[i];
+            double grad = (yhat - y);
+
             std::wstringstream sp;
             sp << L"  #" << (i + 1)
-                << L" expected=" << gY[i]
+                << L" expected=" << y
                 << L" predicted=" << pred
-                << L"  score=" << gPerceptron->score(gX[i]);
+                << L"  score=" << yhat
+                << L"  grad(yhat-y)=" << grad;
             AppendLog(sp.str(), hwnd);
         }
+
 
         AppendLog(L"\nSave model? (y/n): ", hwnd);
         gTrainStep = 6;

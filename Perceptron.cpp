@@ -1,4 +1,4 @@
-#include "Perceptron.h"
+﻿#include "Perceptron.h"
 #include <cstdlib>
 #include <ctime>
 #include <fstream>
@@ -37,16 +37,17 @@ int Perceptron::predict(const std::vector<double>& inputs)
 
 void Perceptron::train(const std::vector<double>& inputs, int expectedOutput)
 {
-    int output = predict(inputs);
-    int error = expectedOutput - output; // -1, 0, +1
+    double yHat = score(inputs); // raw output before threshold
+    double grad = yHat - expectedOutput; // derivative of loss w.r.t output
 
-    // update weights
+    // update weights using gradient
     for (size_t i = 0; i < weights.size(); ++i)
-        weights[i] += learningRate * error * inputs[i];
+        weights[i] -= learningRate * grad * inputs[i]; // subtract gradient * LR
 
     // update bias
-    bias += learningRate * error;
+    bias -= learningRate * grad;
 }
+
 
 bool Perceptron::saveModel(const std::string& filename) const
 {
