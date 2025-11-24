@@ -1,0 +1,21 @@
+Subject: Weekly Team Meeting - Project Update
+
+Hi everyone,
+
+I hope you're all having a good week. I wanted to send out the agenda for our weekly team meeting scheduled for tomorrow at 2 PM.
+
+We'll be discussing the following topics:
+- Progress on the current development sprint
+- Code review feedback from last week
+- Planning for next quarter's milestones
+- New team member onboarding process
+
+Please come prepared with your status updates and any questions you might have about the upcoming deadlines.
+
+Also, a reminder that we have the quarterly company presentation next month. I'll be reaching out to each team member individually to discuss your contributions.
+
+If you can't make tomorrow's meeting, please let me know in advance so we can schedule a brief one-on-one to catch up.
+
+Best regards,
+Sarah Johnson
+Development Team Lead

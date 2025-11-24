@@ -1,0 +1,15 @@
+From: Peoples Bank
+Subject: EFT Activity Notification (Your payment is processing)
+Your payment ($495.42) is processing.
+To verify that your payment was applied follow the steps below:
+1. Access URL REMOVED
+2. Login and select Charter e-pay
+3. Select Recent Activity on the left navigation
+4. View Payment Status
+Your one-time EFT debit card payment dated Sunday 06/07/2005 MST is listed below.
+Expiration Date: Sunday 06/07/2005
+Payment: $495.42
+PLEASE NOTE: This is a real-time payment paid directly from your checking account.
+Thank you again for making a ONE TIME payment online.
+This email is not set up to receive replies. If you have questions contact us at URL REMOVED.
+Thank you for using Peoples Bank Online.

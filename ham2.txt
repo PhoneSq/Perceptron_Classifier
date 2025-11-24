@@ -1,0 +1,18 @@
+Subject: Login from a New Device
+
+Dear Sarah,
+
+We detected a login to your account from a new device on August 23, 2025 at 9:41 AM (PST).
+Details:
+
+Device: Windows 11 PC
+
+Location: Portland, OR, United States
+
+Browser: Microsoft Edge
+
+If this was you, no action is needed.
+If this was not you, please reset your password immediately through your banking app or call our customer support line.
+
+Thank you for helping us keep your account safe.
+Customer Security Team – Riverstone Bank
